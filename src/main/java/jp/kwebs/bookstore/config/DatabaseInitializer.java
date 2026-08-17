@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import jp.kwebs.bookstore.entity.Book;
 import jp.kwebs.bookstore.service.BookService;
 
+@Configuration
 public class DatabaseInitializer {
 	
 	@Bean
@@ -20,7 +22,7 @@ public class DatabaseInitializer {
 	List<Book> getBooks() {
 		var list = List.of(
 				new Book(null,"情報倫理", LocalDate.of(2015, 3, 10),3500, List.of("印刷本", "電子本", "オーディオブック")),
-				new Book(null, "情報倫理", LocalDate.of(2015, 3, 10), 3500, List.of("印刷本", "電子本", "オーディオブック")),
+				new Book(null, "ネットワーク基礎", LocalDate.of(2016, 4, 20), 3200, List.of("印刷本", "電子本")),
 				new Book(null, "わかりやすいJava", LocalDate.of(2020, 4, 15), 3200, List.of("印刷本", "電子本")),
 				new Book(null, "Spring Boot入門", LocalDate.of(2022, 6, 20), 3800, List.of("印刷本", "電子本", "オーディオブック")),
 				new Book(null, "はじめてのデータベース", LocalDate.of(2019, 9, 5), 2800, List.of("印刷本")),

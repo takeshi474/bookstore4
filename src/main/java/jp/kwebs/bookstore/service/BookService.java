@@ -60,4 +60,12 @@ public class BookService {
 		book.setMediaType(bookForm.getMediaType());
 	}
 	
+	public BookForm toForm(Book book) {
+		return new BookForm(book.getId(),
+							book.getTitle(),
+							book.getDate(),
+							book.getPrice(),
+							book.getMediaType());
+	}
+	
 }

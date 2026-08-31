@@ -40,6 +40,10 @@ public class BookService {
 	    return repo.findAll(pageable);
 	}
 	
+	public Page<Book> searchBooks(String keyword, Pageable pageable) {
+	    return repo.findByTitleContainingIgnoreCase(keyword, pageable);
+	}
+	
 	public Book readBookById(Long id) {
 		return repo.findById(id)
 					.orElseThrow();

@@ -18,73 +18,126 @@
             <i class="bi"></i> ＋ 新規作成
         </a>
     </div>
-<div class="d-flex justify-content-end align-items-center mb-3">
+    
+<div class="mb-3">
 
 <th:block th:with="
     currentSort=${param.sort != null ? param.sort[0] : 'idAsc'},
     currentSize=${param.size != null ? param.size[0] : '10'}
 ">
 
-    <label for="sort" class="me-2 fw-semibold">並び替え：</label>
+    <!-- 検索 -->
+    <form th:action="@{/book/list}" method="get"
+          class="d-flex justify-content-end align-items-center mb-3">
 
-    <select id="sort" class="form-select w-auto"
-            onchange="location.href=this.value">
+        <input type="text"
+               name="keyword"
+               class="form-control w-auto"
+               placeholder="書籍名を検索"
+               th:value="${param.keyword}">
 
-        <option th:value="@{/book/list(sort='idAsc', size=${currentSize})}"
-                th:selected="${currentSort == 'idAsc'}">
-            ID昇順
-        </option>
+        <button type="submit" class="btn btn-primary ms-2">
+            検索
+        </button>
 
-        <option th:value="@{/book/list(sort='idDesc', size=${currentSize})}"
-                th:selected="${currentSort == 'idDesc'}">
-            ID降順
-        </option>
-
-        <option th:value="@{/book/list(sort='priceAsc', size=${currentSize})}"
-                th:selected="${currentSort == 'priceAsc'}">
-            価格：安い順
-        </option>
-
-        <option th:value="@{/book/list(sort='priceDesc', size=${currentSize})}"
-                th:selected="${currentSort == 'priceDesc'}">
-            価格：高い順
-        </option>
-
-        <option th:value="@{/book/list(sort='dateAsc', size=${currentSize})}"
-                th:selected="${currentSort == 'dateAsc'}">
-            発行日：古い順
-        </option>
-
-        <option th:value="@{/book/list(sort='dateDesc', size=${currentSize})}"
-                th:selected="${currentSort == 'dateDesc'}">
-            発行日：新しい順
-        </option>
-
-    </select>
+    </form>
 
 
-    <label for="size" class="ms-4 me-2 fw-semibold">表示件数：</label>
+    <!-- ソート・表示件数 -->
+    <div class="d-flex justify-content-end align-items-center">
 
-    <select id="size" class="form-select w-auto"
-            onchange="location.href=this.value">
+        <label for="sort" class="me-2 fw-semibold">並び替え：</label>
 
-        <option th:value="@{/book/list(sort=${currentSort}, size=10)}"
-                th:selected="${currentSize == '10'}">
-            10件
-        </option>
+        <select id="sort" class="form-select w-auto"
+                onchange="location.href=this.value">
 
-        <option th:value="@{/book/list(sort=${currentSort}, size=20)}"
-                th:selected="${currentSize == '20'}">
-            20件
-        </option>
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='idAsc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'idAsc'}">
+                ID昇順
+            </option>
 
-        <option th:value="@{/book/list(sort=${currentSort}, size=30)}"
-                th:selected="${currentSize == '30'}">
-            30件
-        </option>
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='idDesc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'idDesc'}">
+                ID降順
+            </option>
 
-    </select>
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='priceAsc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'priceAsc'}">
+                価格：安い順
+            </option>
 
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='priceDesc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'priceDesc'}">
+                価格：高い順
+            </option>
+
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='dateAsc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'dateAsc'}">
+                発行日：古い順
+            </option>
+
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort='dateDesc',
+                        size=${currentSize})}"
+                    th:selected="${currentSort == 'dateDesc'}">
+                発行日：新しい順
+            </option>
+
+        </select>
+
+
+        <label for="size" class="ms-4 me-2 fw-semibold">表示件数：</label>
+
+        <select id="size" class="form-select w-auto"
+                onchange="location.href=this.value">
+
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                        size=10)}"
+                    th:selected="${param.size == null or param.size[0] == '10'}">
+                10件
+            </option>
+
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                        size=20)}"
+                    th:selected="${param.size != null and param.size[0] == '20'}">
+                20件
+            </option>
+
+            <option th:value="@{/book/list(
+                        keyword=${param.keyword != null ? param.keyword[0] : ''},
+                        sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                        size=30)}"
+                    th:selected="${param.size != null and param.size[0] == '30'}">
+                30件
+            </option>
+
+        </select>
+
+    </div>
+
+</th:block>
+
+</div>
 </th:block>
 
 </div>
@@ -119,14 +172,22 @@
                                onclick="return confirm('本当に削除しますか？');">削除</a>
                         </td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(books)}">
-                        <td colspan="6" class="text-center text-muted py-4">登録された書籍がありません。</td>
-                    </tr>
+					<tr th:if="${books.isEmpty()}">
+					    <td colspan="6" class="text-center text-muted py-4">
+					        <span th:if="${param.keyword != null and param.keyword[0] != ''}">
+					            「<span th:text="${param.keyword[0]}"></span>」に一致する書籍がありません。
+					        </span>
+					        <span th:unless="${param.keyword != null and param.keyword[0] != ''}">
+					            登録された書籍がありません。
+					        </span>
+					    </td>
+					</tr>
                 </tbody>
             </table>
         </div>
     </div>
-<div class="d-flex justify-content-center mt-4">
+<div class="d-flex justify-content-center mt-4"
+	th:if="${books.totalPages > 1}">
     <nav aria-label="ページナビゲーション">
         <ul class="pagination">
 	        <li class="page-item me-2"
@@ -136,7 +197,8 @@
 			       th:href="@{/book/list(
 			           page=${books.number - 1},
 			           size=${param.size != null ? param.size[0] : 10},
-			           sort=${param.sort != null ? param.sort[0] : 'idAsc'}
+			           sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+			           keyword=${param.keyword != null ? param.keyword[0] : ''}
 			       )}">
 			        前へ
 			    </a>
@@ -149,7 +211,8 @@
                    th:href="@{/book/list(
                        page=0,
                        size=${param.size != null ? param.size[0] : 10},
-                       sort=${param.sort != null ? param.sort[0] : 'idAsc'}
+                       sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                       keyword=${param.keyword != null ? param.keyword[0] : ''}
                    )}">
                     1
                 </a>
@@ -171,7 +234,8 @@
                    th:href="@{/book/list(
                        page=${pageNumber},
                        size=${param.size != null ? param.size[0] : 10},
-                       sort=${param.sort != null ? param.sort[0] : 'idAsc'}
+                       sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                       keyword=${param.keyword != null ? param.keyword[0] : ''}
                    )}"
                    th:text="${pageNumber + 1}">
                 </a>
@@ -193,7 +257,8 @@
                    th:href="@{/book/list(
                        page=${books.totalPages - 1},
                        size=${param.size != null ? param.size[0] : 10},
-                       sort=${param.sort != null ? param.sort[0] : 'idAsc'}
+                       sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+                       keyword=${param.keyword != null ? param.keyword[0] : ''}
                    )}"
                    th:text="${books.totalPages}">
                 </a>
@@ -206,7 +271,8 @@
 			       th:href="@{/book/list(
 			           page=${books.number + 1},
 			           size=${param.size != null ? param.size[0] : 10},
-			           sort=${param.sort != null ? param.sort[0] : 'idAsc'}
+			           sort=${param.sort != null ? param.sort[0] : 'idAsc'},
+			           keyword=${param.keyword != null ? param.keyword[0] : ''}
 			       )}">
 			        次へ
 			    </a>

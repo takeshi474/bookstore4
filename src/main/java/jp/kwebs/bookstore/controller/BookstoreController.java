@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Pageable;
 
 import jakarta.validation.Valid;
 import jp.kwebs.bookstore.entity.Book;
@@ -31,6 +32,7 @@ public class BookstoreController {
 			@RequestParam(name = "sort", defaultValue = "idAsc") String sort,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			Model model){
 		
 		Sort sortOption;
@@ -49,27 +51,37 @@ public class BookstoreController {
 		    sortOption = Sort.by("id").ascending();
 		}
 		
-		Page<Book> books = bs.readBooks(PageRequest.of(page, size, sortOption)); //ページ取得
-		model.addAttribute("books", books);
+		Pageable pageable = PageRequest.of(page, size, sortOption);
+
+		Page<Book> books;
+
+		if (keyword.isBlank()) {
+		    books = bs.readBooks(pageable);
+		} else {
+		    books = bs.searchBooks(keyword, pageable);
+		}
 		
 		int totalPages = books.getTotalPages();
 
-		int startPage;
-		int endPage;
+		int startPage = 0;
+		int endPage = -1;
 
-		if (page < 5) {
-		    startPage = 0;
-		    endPage = Math.min(9, totalPages - 1);
-		} else if (page > totalPages - 6) {
-		    startPage = Math.max(0, totalPages - 10);
-		    endPage = totalPages - 1;
-		} else {
-		    startPage = page - 5;
-		    endPage = page + 5;
+		if (totalPages > 0) {
+		    if (page < 5) {
+		        startPage = 0;
+		        endPage = Math.min(9, totalPages - 1);
+		    } else if (page > totalPages - 6) {
+		        startPage = Math.max(0, totalPages - 10);
+		        endPage = totalPages - 1;
+		    } else {
+		        startPage = page - 5;
+		        endPage = page + 5;
+		    }
 		}
 
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("books", books);
 		
 		return "book-list";	
 	}

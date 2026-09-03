@@ -10,6 +10,7 @@ Java / Spring Bootで作成した書籍管理Webアプリです。
 - H2
 - Bootstrap
 - Git / GitHub
+- Render
 
 ## 機能
 - 書籍の登録・編集・削除

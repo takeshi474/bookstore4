@@ -20,4 +20,4 @@ Java / Spring Bootで作成した書籍管理Webアプリです。
 - 表示件数変更
 
 ## URL
-デモURL：xxxxx
+デモURL：https://bookstore4-qmol.onrender.com/book/list

@@ -89,10 +89,22 @@
             <div class="row">
                 <div class="col-sm-9 offset-sm-3 d-flex gap-2">
                     <input type="submit" value="修正" class="btn btn-primary">
-                    <a th:href="@{/book/list}" class="btn btn-outline-secondary">キャンセル</a>
+					<a th:href="@{/book/list(
+					    page=${bookForm.page},
+					    size=${bookForm.size},
+					    sort=${bookForm.sort},
+					    keyword=${bookForm.keyword}
+					)}"
+					   class="btn btn-outline-secondary">
+					    キャンセル
+					</a>
                 </div>
             </div>
 			<input type="hidden" th:field="*{id}">
+			<input type="hidden" th:field="*{page}">
+			<input type="hidden" th:field="*{size}">
+			<input type="hidden" th:field="*{sort}">
+			<input type="hidden" th:field="*{keyword}">
         </form>
     </div>
 </div>

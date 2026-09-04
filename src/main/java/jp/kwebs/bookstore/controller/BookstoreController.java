@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
 
 import jakarta.validation.Valid;
@@ -82,6 +83,11 @@ public class BookstoreController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("books", books);
+
+		model.addAttribute("sort", sort);
+		model.addAttribute("page", page);
+		model.addAttribute("size", size);
+		model.addAttribute("keyword", keyword);
 		
 		return "book-list";	
 	}
@@ -102,21 +108,47 @@ public class BookstoreController {
 	}
 	
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable Long id, Model model) {
-		var book =bs.readBookById(id);
-		model.addAttribute("bookForm", bs.toForm(book));
-		return "book-edit";
+	public String edit(
+	        @PathVariable Long id,
+	        @RequestParam(name = "sort", defaultValue = "idAsc") String sort,
+	        @RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size,
+	        @RequestParam(name = "keyword", defaultValue = "") String keyword,
+	        Model model) {
+
+	    var book = bs.readBookById(id);
+
+	    BookForm bookForm = bs.toForm(book);
+
+	    bookForm.setPage(page);
+	    bookForm.setSize(size);
+	    bookForm.setSort(sort);
+	    bookForm.setKeyword(keyword);
+
+	    model.addAttribute("bookForm", bookForm);
+
+	    return "book-edit";
 	}
 	
 	@PostMapping("/edit")
-	public String update(@Valid BookForm bookForm, BindingResult result) {
-		if (result.hasErrors()) {
-			return "book-edit";
-		}
-		bs.updateBook(bookForm);
-		return "redirect:/book/list";
-	}
-	
+	public String update(
+	        @Valid BookForm bookForm,
+	        BindingResult result,
+	        RedirectAttributes redirectAttributes) {
+
+	    if (result.hasErrors()) {
+	        return "book-edit";
+	    }
+
+	    bs.updateBook(bookForm);
+
+	    redirectAttributes.addAttribute("page", bookForm.getPage());
+	    redirectAttributes.addAttribute("size", bookForm.getSize());
+	    redirectAttributes.addAttribute("sort", bookForm.getSort());
+	    redirectAttributes.addAttribute("keyword", bookForm.getKeyword());
+
+	    return "redirect:/book/list";
+	}	
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable Long id) {
 		bs.deleteBook(id);

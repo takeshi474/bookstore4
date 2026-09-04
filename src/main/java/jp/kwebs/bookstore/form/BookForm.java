@@ -26,6 +26,11 @@ public class BookForm {
 	private Integer price;				// 価格
 	@NotEmpty(message="1つ以上選択してください")
 	private List<String> mediaType;		// メディアタイプ
+	private String sort;				//ソート
+	private int page;					//ページング
+	private int size;					//サイズ
+	private String keyword;				//検索
+	
 	
 	public BookForm() {
 	}
@@ -76,6 +81,38 @@ public class BookForm {
 
 	public void setMediaType(List<String> mediaType) {
 		this.mediaType = mediaType;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 

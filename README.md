@@ -42,13 +42,14 @@ PostgreSQLを使用しています。
 
 書籍情報と、書籍が持つ複数のメディアタイプを分けて管理しています。
 
-・book
+* `book`
+
   * 書籍ID
   * タイトル
   * 発行日
   * 価格
+* `book_media_type`
 
-・book_media_type
   * 書籍ID
   * メディアタイプ
 

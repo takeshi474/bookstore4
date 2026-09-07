@@ -2,9 +2,9 @@
 
 Java / Spring Bootで作成した書籍管理Webアプリです。
 
-Udemyの講座を参考にして作成したアプリをベースに、自身で機能追加やUIの改善、修正を行っています。
+Udemyの講座　https://www.udemy.com/course/hello-java/?couponCode=26BBPPLO2MXTRMT
 
-https://www.udemy.com/course/hello-java/?couponCode=26BBPPLO2MXTRMT
+を参考にして作成したアプリをベースに、自身で機能追加やUIの改善、修正を行っています。
 
 書籍の登録・編集・削除に加えて、キーワード検索、ソート、ページネーション、表示件数変更などの機能を実装しています。
 

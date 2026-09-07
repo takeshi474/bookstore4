@@ -11,6 +11,7 @@ Java / Spring Bootで作成した書籍管理Webアプリです。
 - Bootstrap
 - Git / GitHub
 - Render
+- PostgreSQL
 
 ## 機能
 - 書籍の登録・編集・削除
